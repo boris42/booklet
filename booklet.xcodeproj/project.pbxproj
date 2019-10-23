@@ -24,6 +24,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9A28FC912360411900D4C15A /* 8pages.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 8pages.pdf; sourceTree = "<group>"; };
+		9A28FC922360411900D4C15A /* Booklet.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = Booklet.zip; sourceTree = "<group>"; };
+		9A28FC932360411900D4C15A /* Booklet-8pages.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Booklet-8pages.pdf"; sourceTree = "<group>"; };
 		9A902B272356567C00B8E8FF /* booklet */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = booklet; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A902B2A2356567C00B8E8FF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		9A902B32235656B800B8E8FF /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
@@ -41,9 +44,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9A28FC90236040C800D4C15A /* Release */ = {
+			isa = PBXGroup;
+			children = (
+				9A28FC912360411900D4C15A /* 8pages.pdf */,
+				9A28FC932360411900D4C15A /* Booklet-8pages.pdf */,
+				9A28FC922360411900D4C15A /* Booklet.zip */,
+			);
+			path = Release;
+			sourceTree = "<group>";
+		};
 		9A902B1E2356567C00B8E8FF = {
 			isa = PBXGroup;
 			children = (
+				9A28FC90236040C800D4C15A /* Release */,
 				9A902B292356567C00B8E8FF /* booklet */,
 				9A902B282356567C00B8E8FF /* Products */,
 				9A902B31235656B800B8E8FF /* Frameworks */,
