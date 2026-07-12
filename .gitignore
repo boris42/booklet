@@ -1,0 +1,11 @@
+.DS_Store
+._*
+
+# Local Xcode state
+*.xcuserstate
+booklet.xcodeproj/**/xcuserdata/
+
+# Generated build and release products
+build/
+dist/
+Release/*.dmg

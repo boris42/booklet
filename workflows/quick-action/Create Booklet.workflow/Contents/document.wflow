@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>534</string>
+	<key>AMApplicationVersion</key>
+	<string>2.10</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>1.0.2</string>
+				<key>AMApplication</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run AppleScript.action</string>
+				<key>ActionName</key>
+				<string>Run AppleScript</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>source</key>
+					<string>on run {input, parameters}	set bookletTool to "/Library/Application Support/Create Booklet/booklet"		if (count of input) is 0 then		display dialog "No PDF files were passed to the workflow." buttons {"OK"} default button "OK"		return input	end if		try		do shell script "test -x " &amp; quoted form of bookletTool	on error		display dialog "Create Booklet helper was not found or is not executable:" &amp; return &amp; return &amp; bookletTool buttons {"OK"} default button "OK"		return input	end try		set creepChoice to button returned of (display dialog "Apply creep compensation?" buttons {"No", "Yes"} default button "Yes")		set extraArgs to ""		if creepChoice is "Yes" then		set innerResult to display dialog "Sheet thickness / creep increment per folded sheet, in mm:" default answer "0.02" buttons {"Cancel", "OK"} default button "OK" cancel button "Cancel"		set innerMM to text returned of innerResult				set coverResult to display dialog "Cover thickness in mm. Use 0 if cover is same paper or there is no separate heavier cover:" default answer "0" buttons {"Cancel", "OK"} default button "OK" cancel button "Cancel"		set coverMM to text returned of coverResult				set innerMM to my normalizeNumberText(innerMM)		set coverMM to my normalizeNumberText(coverMM)				if innerMM is "" then			display dialog "Sheet thickness cannot be blank." buttons {"OK"} default button "OK"			return input		end if				set innerState to my decimalNumberState(innerMM)				if innerState is "invalid" then			display dialog "Sheet thickness is not a valid number:" &amp; return &amp; return &amp; innerMM buttons {"OK"} default button "OK"			return input		end if				if innerState is "zero" then			display dialog "Sheet thickness must be greater than 0." buttons {"OK"} default button "OK"			return input		end if				set extraArgs to " --sheet-thickness " &amp; quoted form of innerMM				if coverMM is not "" then			set coverState to my decimalNumberState(coverMM)						if coverState is "invalid" then				display dialog "Cover thickness is not a valid number:" &amp; return &amp; return &amp; coverMM buttons {"OK"} default button "OK"				return input			end if						if coverState is "positive" then				set extraArgs to extraArgs &amp; " --cover-thickness " &amp; quoted form of coverMM			end if		end if	end if		repeat with f in input		set pdfPath to POSIX path of f		set cmd to quoted form of bookletTool &amp; extraArgs &amp; " " &amp; quoted form of pdfPath				try			do shell script cmd		on error errMsg number errNum			display dialog "Create Booklet failed for:" &amp; return &amp; pdfPath &amp; return &amp; return &amp; errMsg buttons {"OK"} default button "OK"			error number errNum		end try	end repeat		return inputend runon decimalNumberState(theText)	try		set cmd to "/usr/bin/awk -v x=" &amp; quoted form of theText &amp; " 'BEGIN { if (x !~ /^([0-9]+([.][0-9]*)?|[.][0-9]+)$/) print \"invalid\"; else if (x + 0 &gt; 0) print \"positive\"; else print \"zero\" }'"		return do shell script cmd	on error		return "invalid"	end tryend decimalNumberStateon normalizeNumberText(theText)	set theText to my trimText(theText)	set theText to my replaceText(theText, ",", ".")	return theTextend normalizeNumberTexton replaceText(theText, searchString, replacementString)	set oldDelimiters to AppleScript's text item delimiters	set AppleScript's text item delimiters to searchString	set textItems to text items of theText	set AppleScript's text item delimiters to replacementString	set newText to textItems as text	set AppleScript's text item delimiters to oldDelimiters	return newTextend replaceTexton trimText(theText)	set whiteSpaceChars to {" ", tab, return, linefeed}		repeat while theText is not "" and first character of theText is in whiteSpaceChars		set theText to text 2 thru -1 of theText	end repeat		repeat while theText is not "" and last character of theText is in whiteSpaceChars		set theText to text 1 thru -2 of theText	end repeat		return theTextend trimText</string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.RunScript</string>
+				<key>CFBundleVersion</key>
+				<string>1.0.2</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunScriptAction</string>
+				<key>InputUUID</key>
+				<string>9077CB19-0D8F-48DC-933E-F9314190125A</string>
+				<key>Keywords</key>
+				<array>
+					<string>Run</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>3A6117EC-378C-4384-97F2-FFF8A9863F5B</string>
+				<key>UUID</key>
+				<string>AA654016-E7AD-4E3F-8AA1-2285F94382EB</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string>on run {input, parameters}
+	
+	(* Your script goes here *)
+	
+	return input
+end run</string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<integer>1</integer>
+				<key>location</key>
+				<string>451.500000:719.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict/>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>applicationBundleIDsByPath</key>
+		<dict/>
+		<key>applicationPaths</key>
+		<array/>
+		<key>inputTypeIdentifier</key>
+		<string>com.apple.Automator.fileSystemObject.PDF</string>
+		<key>outputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>presentationMode</key>
+		<integer>15</integer>
+		<key>processesInput</key>
+		<false/>
+		<key>serviceInputTypeIdentifier</key>
+		<string>com.apple.Automator.fileSystemObject.PDF</string>
+		<key>serviceOutputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>serviceProcessesInput</key>
+		<false/>
+		<key>systemImageName</key>
+		<string>NSActionTemplate</string>
+		<key>useAutomaticInputType</key>
+		<false/>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.servicesMenu</string>
+	</dict>
+</dict>
+</plist>
